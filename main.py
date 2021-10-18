@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import colorchooser
+from PIL import ImageTk, Image
 import math
 
 root = Tk()
@@ -20,7 +22,18 @@ dict = {
 }
 
 FONT = ("Helvetica", 14)
-PHOTO = 'resister.png'
+PHOTO = 'resistor.png'
+
+sub_menu = Menu()
+sub_menu.add_command(label='Resistor color')
+sub_menu.add_command(label='Calculator')
+sub_menu.add_command(label='About')
+
+main_menu = Menu()
+root.config(menu=main_menu)
+main_menu.add_cascade(label='Research')
+main_menu.add_cascade(label='Documentation', menu=sub_menu)
+
 
 Label(root, text='Resister calculator', font=FONT).pack()
 
@@ -74,7 +87,7 @@ def ans():
 
 
 def made():
-    Label(root, text=f'{number()} * {multiplier.get()} ± {tolerance.get()} = {ans()}', font=FONT).place(x=150, y=70)
+    Label(root, text=f'{number()} * {multiplier.get()} ± {tolerance.get()} = {ans()} Ω', font=FONT).place(x=150, y=70)
     return None
 
 
