@@ -16,3 +16,4 @@ range of resister and type  of resister need ex. 0 - 1
 2. More usable
 3. More detail
 4. Fix bug and error
+5. Adding Scan resister with OpenCv
