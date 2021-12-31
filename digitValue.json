@@ -1,0 +1,74 @@
+{
+    "Black": {
+        "digit": 0,
+        "multiplier": 1,
+        "tolerance": null,
+        "temperature": 250
+    },
+    "Brown": {
+        "digit": 1,
+        "multiplier": 10,
+        "tolerance": 1,
+        "temperature": 100
+    },
+    "Red": {
+        "digit": 2,
+        "multiplier": 100,
+        "tolerance": 2,
+        "temperature": 50
+    },
+    "Orange": {
+        "digit": 3,
+        "multiplier": 1000,
+        "tolerance": 0.05,
+        "temperature": 15
+    },
+    "Yellow": {
+        "digit": 4,
+        "multiplier": 10000,
+        "tolerance": 0.02,
+        "temperature": 25
+    },
+    "Green": {
+        "digit": 5,
+        "multiplier": 100000,
+        "tolerance": 0.5,
+        "temperature": 20
+    },
+    "Blue": {
+        "digit": 6,
+        "multiplier": 1000000,
+        "tolerance": 0.25,
+        "temperature": 10
+    },
+    "Violet": {
+        "digit": 7,
+        "multiplier": 10000000,
+        "tolerance": 0.1,
+        "temperature": 5
+    },
+    "Grey": {
+        "digit": 8,
+        "multiplier": 100000000,
+        "tolerance": 0.01,
+        "temperature": 1
+    },
+    "White": {
+        "digit": 9,
+        "multiplier": null,
+        "tolerance": 1000000000,
+        "temperature": null
+    },
+    "Gold": {
+        "digit": null,
+        "multiplier": 0.1,
+        "tolerance": 5,
+        "temperature": null
+    },
+    "Silver": {
+        "digit": null,
+        "multiplier": 0.01,
+        "tolerance": 10,
+        "temperature": null
+    }
+}

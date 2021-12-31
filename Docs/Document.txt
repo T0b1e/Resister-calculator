@@ -1,0 +1,12 @@
+Resister Calculator Program :
+
+Made for caluclating resister by color and Searching for Suitable resistor
+
+How to use:
+    1. Select Color
+    2. Select Multiplier
+    3. Select Tolerance
+    4. Click Enter
+
+By Narongkorn Kitrungrot 
+Contact : https://github.com/T0b1e/Resister-calculator
