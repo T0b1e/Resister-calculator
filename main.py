@@ -1,316 +1,195 @@
-from tkinter import *
-from digit import *
-
-root = Tk()
-root.title('Resister calculator')
-root.geometry('500x400+500+200')
-root.resizable(False, False)
-
-FONT = ("Helvetica", 14)
-PHOTO = 'resistor.png'
-
-
-def about_page():
-    root.destroy()
-    about = Tk()
-    about.title('About Page')
-    about.geometry('500x400+500+200')
-    about.resizable(False, False)
-
-    Label(about, text='Hi my name is Narongkorn Kitrungrot 17', font=10).pack()
-    Label(about, text='and I made this for Educational and Study Tkinter', font=10).pack()
-
-    about.mainloop()
-
-
-def problem_page():  # TODO
-    root.destroy()
-    problem = Tk()
-    problem.title('About Page')
-    problem.geometry('500x400+500+200')
-    problem.resizable(False, False)
-
-    Label(problem, text='Sending Bug , Error case in text box', font=10).place(x=100, y=100)
-
-    reported = StringVar()
-    Entry(problem, reported).place(x=100, y=150)
-    reported.get()
-
-    la = Label(problem, text='We received your message', font=10).place(x=100, y=200)
-    Button(problem, text='Sending Report', command=la).place(x=100, y=180)
-
-    problem.mainloop()
-
-from tkinter import *
-
-root = Tk()
-root.title('Resister calculator')
-root.geometry('500x400+500+200')
-root.resizable(False, False)
-
-dictionary = {
-    'Black': {
-        'digit': 0,
-        'multiplier': 1,
-        'tolerance': None,
-        'temperature': 250
-    },
-    'Brown': {
-        'digit': 1,
-        'multiplier': 10,
-        'tolerance': 1,
-        'temperature': 100
-    },
-    'Red': {
-        'digit': 2,
-        'multiplier': 100,
-        'tolerance': 2,
-        'temperature': 50
-    },
-    'Orange': {
-        'digit': 3,
-        'multiplier': 1000,
-        'tolerance': None,
-        'temperature': 15
-    },
-    'Yellow': {
-        'digit': 4,
-        'multiplier': 10000,
-        'tolerance': None,
-        'temperature': 25
-    },
-    'Green': {
-        'digit': 5,
-        'multiplier': 100000,
-        'tolerance': 0.5,
-        'temperature': 20
-    },
-    'Blue': {
-        'digit': 6,
-        'multiplier': 1000000,
-        'tolerance': 0.25,
-        'temperature': 10
-    },
-    'Violet': {
-        'digit': 7,
-        'multiplier': None,
-        'tolerance': 0.1,
-        'temperature': 5
-    },
-    'Grey': {
-        'digit': 8,
-        'multiplier': None,
-        'tolerance': None,
-        'temperature': 1
-    },
-    'White': {
-        'digit': 9,
-        'multiplier': None,
-        'tolerance': None,
-        'temperature': None
-    },
-    'Gold': {
-        'digit': None,
-        'multiplier': 0.1,
-        'tolerance': 5,
-        'temperature': None
-    },
-    'Silver': {
-        'digit': None,
-        'multiplier': 0.01,
-        'tolerance': 10,
-        'temperature': None
-    },
-}
-
-FONT = ("Helvetica", 14)
-PHOTO = 'resistor.png'
-
-
-def about_page():
-    root.destroy()
-    about = Tk()
-    about.title('About Page')
-    about.geometry('500x400+500+200')
-    about.resizable(False, False)
-
-    Label(about, text='Hi my name is Narongkorn Kitrungrot 17', font=10).pack()
-    Label(about, text='and I made this for Educational and Study Tkinter', font=10).pack()
-
-    about.mainloop()
-
-
-def problem_page():
-    root.destroy()
-    problem = Tk()
-    problem.title('About Page')
-    problem.geometry('500x400+500+200')
-    problem.resizable(False, False)
-
-    Label(problem, text='Sending Bug , Error case in text box', font=10).place(x=100, y=100)
-    report = StringVar()
-    Entry(problem, report, text='Sending Report').place(x=100, y=150)
+import tkinter as tk
+from tkinter import Button, Frame, Label, LabelFrame, Tk, ttk, messagebox, Text
+from colorama import Fore
+import json
 
-    def reciev():  # TODO
-        Label(problem, text=report.get()).place(x=100, y=200)
 
-    Button(problem, text='Sending Report', command=reciev).place(x=100, y=180)
-
-    problem.mainloop()
-
-
-sub_menu = Menu()
-sub_menu.add_command(label='Resistor color')
-sub_menu.add_command(label='Calculator')
-sub_menu.add_command(label='Problem', command=problem_page)
-sub_menu.add_command(label='About', command=about_page)
-
-main_menu = Menu()
-root.config(menu=main_menu)
-main_menu.add_cascade(label='Research')
-main_menu.add_cascade(label='Documentation', menu=sub_menu)
+class App:
+    def __init__(self, master):
+        self.master = master
+        master.title('Resister Calculator')
+        master.geometry('500x500')
+        master.resizable(True, True)
 
+        # VALIABLE
+        self.color = ['None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White', 'Gold', 'Silver']
+        self.tab = ttk.Notebook(root)
+        self.Home = ttk.Frame(self.tab)
+        self.Search = ttk.Frame(self.tab)
+        self.Docs = ttk.Frame(self.tab)
 
-Label(root, text='Resister calculator', font=FONT).pack()
+        self.tab.add(self.Home, text='Home')
+        self.tab.add(self.Search, text='Search')
+        self.tab.add(self.Docs, text='Docs')
 
-img = PhotoImage(file='resister.png')
-Label(
-    root,
-    image=img
-).pack()
+        self.tab.pack(expand=1, fill='both')
 
-first_digit = StringVar()
-first_digit.set('1 Digit')
-OptionMenu(root, first_digit,
-           'None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')\
-    .place(x=20, y=200)
-
-second_digit = StringVar()
-second_digit.set('2 Digit')
-OptionMenu(root, second_digit,
-           'None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')\
-    .place(x=100, y=200)
-
-third_digit = StringVar()
-third_digit.set('3 Digit')
-OptionMenu(root, third_digit, 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')\
-    .place(x=180, y=200)
-
-multiplier = StringVar()
-multiplier.set('Multiplier')
-OptionMenu(root, multiplier, 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue').place(x=260, y=200)
+        # -- Main Page --
 
-tolerance = StringVar()
-tolerance.set('Tolerance')
-OptionMenu(root, tolerance, 'Brown', 'Red', 'Green', 'Blue', 'Violet', 'Gold', 'Silver').place(x=360, y=200)
+        self.select = ttk.Labelframe(self.Home, text='Select Color')
+        self.select.place(x=10, y=10)
 
-temp1 = 1
-temp2 = 1
-temp3 = 1
-temp4 = 1
-temp5 = 1
+        self.ans = ttk.Labelframe(self.Home, text='Answer :')
+        self.ans.place(x=30, y=280)
 
+        self.firstDigitLabel = Label(self.select, text='First Digit')
+        self.firstDigitLabel.pack()
 
-def number():
+        self.firstDigitValue = tk.StringVar()
+        self.firstDigit = ttk.Combobox(self.select, textvariable=self.firstDigitValue)
+        self.firstDigit['values'] = self.color[:10]
+        self.firstDigit['state'] = self.color[0]
+
+        self.firstDigit.pack(padx=5, pady=5)
+
+        self.secondDigitLabel = Label(self.select, text='Second Digit')
+        self.secondDigitLabel.pack()
+
+        self.secondDigitValue = tk.StringVar()
+        self.secondDigit = ttk.Combobox(self.select, textvariable=self.secondDigitValue)
+        self.secondDigit['values'] = self.color[:10]
+        self.secondDigit['state'] = self.color[0]
+
+        self.secondDigit.pack(padx=5, pady=5)
+
+        self.multiplierDigitLabel = Label(self.select, text='Multiplier')
+        self.multiplierDigitLabel.pack()
+
+        self.multiplierDigitValue = tk.StringVar()
+        self.multiplierDigit = ttk.Combobox(self.select, textvariable=self.multiplierDigitValue)
+        self.multiplierDigit['values'] = self.color[1:]
+        self.multiplierDigit['state'] = self.color[0]
+
+        self.multiplierDigit.pack(padx=5, pady=5)
 
-    global temp1, temp2, temp3, temp4, temp5
+        self.toleranceDigitLabel = Label(self.select, text='Tolerance')
+        self.toleranceDigitLabel.pack()
 
-    for x, y in dictionary.items():
-        if first_digit.get() == x:
-            temp1 = y['digit']
-        if first_digit.get() != x:
-            temp1 = 0
+        self.toleranceDigitValue = tk.StringVar()
+        self.toleranceDigit = ttk.Combobox(self.select, textvariable=self.toleranceDigitValue)
+        self.toleranceDigit['values'] = self.color[2:10]
+        self.toleranceDigit['state'] = self.color[0]
 
-        if second_digit.get() == x:
-            temp2 = y['digit']
-        if second_digit.get() != x:
-            temp2 = 0
-
-        if third_digit.get() == x:
-            temp3 = y['digit']
-
-        if multiplier.get() == x:
-            temp4 = y['multiplier']
-
-        if tolerance.get() == x:
-            temp5 = y['tolerance']
-
-    num = [temp1, temp2, temp3]
-    return int(' '.join(str(num).split(',')).removeprefix('[').removesuffix(']').replace(' ', ''))
-
-
-def ans():
-    return str([round(((number() * int(temp4)) + float(temp5 / 100)), 2),
-                round(((number() * int(temp4)) - float(temp5 / 100)), 2)]).replace(',', '-')
-
-
-def made():
-    Label(root, text=f'{number()} * {temp4} ± {temp5} = {ans()} Ω', font=FONT).place(x=100, y=170)
-    return None
-
-
-Button(root, text='Enter', command=made).place(x=220, y=250)
-
-if __name__ == '__main__':
-    root.mainloop()
-sub_menu = Menu()
-sub_menu.add_command(label='Resistor color')
-sub_menu.add_command(label='Calculator')
-sub_menu.add_command(label='Problem', command=problem_page)
-sub_menu.add_command(label='About', command=about_page)
-
-main_menu = Menu()
-root.config(menu=main_menu)
-main_menu.add_cascade(label='Research')
-main_menu.add_cascade(label='Documentation', menu=sub_menu)
-
-
-Label(root, text='Resister calculator', font=FONT).pack()
-
-img = PhotoImage(file='resister.png')
-Label(root, image=img).pack()
-
-first_digit = StringVar()
-first_digit.set('1 Digit')
-OptionMenu(root, first_digit,
-           'None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')\
-    .place(x=20, y=200)
-
-second_digit = StringVar()
-second_digit.set('2 Digit')
-OptionMenu(root, second_digit,
-           'None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')\
-    .place(x=100, y=200)
-
-third_digit = StringVar()
-third_digit.set('3 Digit')
-OptionMenu(root, third_digit, 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')\
-    .place(x=180, y=200)
-
-multiplier = StringVar()
-multiplier.set('Multiplier')
-OptionMenu(root, multiplier, 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue').place(x=260, y=200)
-
-tolerance = StringVar()
-tolerance.set('Tolerance')
-OptionMenu(root, tolerance, 'Brown', 'Red', 'Green', 'Blue', 'Violet', 'Gold', 'Silver').place(x=360, y=200)
-
-
-def numbers():
-
-    set_digit = None
-    set_digit = [first_digit.get(), second_digit.get(), third_digit.get(), multiplier.get(), tolerance.get()]
-    print(sorte(set_digit))
-
-    return sorte(set_digit)
-
-def create():
-    #Label(root, text=f'{} * {number[3]} ± {number[4]} = {0} Ω', font=FONT).place(x=100, y=170)
-    print(numbers())
-    return None
-
-
-Button(root, text='Enter', command=numbers).place(x=220, y=250)
-
-if __name__ == '__main__':
+        self.toleranceDigit.pack(padx=5, pady=5)
+
+        self.enter = Button(self.select,text='Enter', command=self.showOutput)
+        self.enter.pack()
+
+        self.answerLab = Label(self.ans)
+        self.answerLab.pack()
+
+        self.colorFrame = LabelFrame(self.Home, text='Color :')
+        self.colorFrame.place(x=200, y=10)
+
+        self.colorFirstDigit = Label(self.colorFrame, height=2, width=4)
+        self.colorFirstDigit.pack()
+
+        self.colorSecondDigit = Label(self.colorFrame, height=2, width=4)
+        self.colorSecondDigit.pack()
+        
+        self.colorMultiplierDigit = Label(self.colorFrame, height=2, width=4)
+        self.colorMultiplierDigit.pack()
+
+        self.colorToleranceDigit = Label(self.colorFrame, height=2, width=4)
+        self.colorToleranceDigit.pack()
+
+        # --- Documant Page ---
+
+        self.documentFrame = LabelFrame(self.Docs)
+        self.documentFrame.pack()
+        self.documentText = Text(self.documentFrame)
+
+        with open('Docs/Document.txt') as f:
+            line = f.readlines()
+
+        x = 4
+        for i in reversed(range(len(line))):
+            self.documentText.insert('1.0', line[i])
+            x -= 1
+
+        self.documentText.pack()
+
+    def findingValue(self):
+        with open("digitValue.json", "r") as f:
+            data = json.load(f)
+        
+        number = []
+        formula = []
+
+        if self.firstDigitValue.get() != '' and self.firstDigitValue.get() != 'None':
+            for x, y in data.items():
+                if self.firstDigitValue.get() == x:
+                    number.append(y['digit'])
+        else:
+            number.append(0)
+        
+        if self.secondDigitValue.get() != '' and self.secondDigitValue.get() != 'None':
+            for x, y in data.items():
+                if self.secondDigitValue.get() == x:
+                    number.append(y['digit'])
+        else:
+            number.append(0)
+
+        formula.append(int(''.join(str(x) for x in number)))
+        
+        if self.multiplierDigitValue.get() != '' and self.toleranceDigitValue.get() != '':
+            
+            for x, y in data.items():
+                if self.multiplierDigitValue.get() == x:
+                    formula.append(y['multiplier'])
+
+            for x, y in data.items():
+                if self.toleranceDigitValue.get() == x:
+                    formula.append(y['tolerance'])
+        else:
+            messagebox.showwarning("Warning", "Are you sure that noting Multiplier, Tolerance ?")
+
+        return formula
+
+    def calculator(self):
+        lists = self.findingValue()
+        return [((lists[0] * lists[1]) - ((lists[0] * lists[1])* lists[2])), ((lists[0] * lists[1]) + ((lists[0] * lists[1])* lists[2]))]
+
+    def showOutput(self):
+        ans = self.calculator()
+        minimumValue = ans[0]
+        maximumValue = ans[1]
+
+        self.answerLab['text'] = f'{minimumValue} --> {maximumValue}'
+        self.showColor()
+
+        return f'{minimumValue} --> {maximumValue}'
+
+    def showColor(self):
+        with open("digitValue.json", "r") as f:
+            data = json.load(f)
+
+        formula = []
+
+        if self.firstDigitValue.get() != '' and self.firstDigitValue.get() != 'None':
+            for x, y in data.items():
+                if self.firstDigitValue.get() == x:
+                    self.colorFirstDigit['bg'] = str(x).lower()
+                    
+        if self.secondDigitValue.get() != '' and self.secondDigitValue.get() != 'None':
+            for x, y in data.items():
+                if self.secondDigitValue.get() == x:
+                    self.colorSecondDigit.config(bg = str(x).lower())
+                    
+        if self.multiplierDigitValue.get() != '' and self.toleranceDigitValue.get() != '':
+            for x, y in data.items():
+                if self.multiplierDigitValue.get() == x:    
+                    self.colorMultiplierDigit.config(bg = str(x).lower())
+
+            for x, y in data.items():
+                if self.toleranceDigitValue.get() == x:    
+                    self.colorToleranceDigit.config(bg = str(x).lower())
+
+        return formula
+
+
+    
+if __name__ == "__main__":
+    root = Tk()
+    app = App(root)
     root.mainloop()
