@@ -11,8 +11,8 @@ For this project I create this for make it easier to calculate resister and easy
 ## Example usgae
 
 <div style="width: 60%; height: 60%">
-    ![image](./Docs/Image/mainPage_1.png)
-    ![image](./Docs/Image/mainPage_2.png)
+    ![image](.Docs/Image/mainPage_1.png)
+    ![image](.Docs/Image/mainPage_2.png)
 </div>
 
 ### OUTPUT
