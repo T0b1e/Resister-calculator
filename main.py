@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import Button, Frame, Label, LabelFrame, Tk, ttk, messagebox, Text
+from tkinter import Button, Checkbutton, Entry, Frame, Label, LabelFrame, StringVar, Tk, ttk, messagebox, Text
+from PIL import ImageTk, Image
 from colorama import Fore
 import json
 
@@ -11,11 +12,15 @@ class App:
         master.geometry('500x500')
         master.resizable(True, True)
 
-        # VALIABLE
+        # -- VALIABLE --
+
         self.color = ['None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White', 'Gold', 'Silver']
+
+        # -- Tab --
+
         self.tab = ttk.Notebook(root)
-        self.Home = ttk.Frame(self.tab)
-        self.Search = ttk.Frame(self.tab)
+        self.Home = ttk.Frame(self.tab)  # Main tab
+        self.Search = ttk.Frame(self.tab) # Seaching tab --In process--
         self.Docs = ttk.Frame(self.tab)
 
         self.tab.add(self.Home, text='Home')
@@ -29,8 +34,8 @@ class App:
         self.select = ttk.Labelframe(self.Home, text='Select Color')
         self.select.place(x=10, y=10)
 
-        self.ans = ttk.Labelframe(self.Home, text='Answer :')
-        self.ans.place(x=30, y=280)
+        self.ans = ttk.Labelframe(self.Home, text='Result :')
+        self.ans.place(x=30, y=300)
 
         self.firstDigitLabel = Label(self.select, text='First Digit')
         self.firstDigitLabel.pack()
@@ -72,26 +77,71 @@ class App:
 
         self.toleranceDigit.pack(padx=5, pady=5)
 
+        # Check if Enter Button was pressed then do ShowOutPut Functions
+
         self.enter = Button(self.select,text='Enter', command=self.showOutput)
         self.enter.pack()
 
-        self.answerLab = Label(self.ans)
-        self.answerLab.pack()
+        # Show How many range of Resister in ohm
 
+        self.MintoMaxLab = Label(self.ans)
+        self.MintoMaxLab.pack()
+
+        # Show Static Value of Resister in ohm
+
+        self.MediumLab = Label(self.ans)
+        self.MediumLab.pack()
+
+        # Show Watt Value in J/s
+
+        self.WattLab = Label(self.ans)
+        self.WattLab.pack()
+
+        '''self.WIDTHS = 50
+        self.HEIGHTS = 230
+        self.resisterImage = Image.open('docs/image/blankResister.png')
+        self.imageResize = self.resisterImage.resize((self.WIDTHS, self.HEIGHTS))
+
+        self.img = ImageTk.PhotoImage(self.imageResize)
+        self.imgLab = Label(image=self.img)
+        self.imgLab.image = self.img
+
+        self.imgLab.place(x=200, y=10)
+        '''
+
+        # Setting Color Frame
+        
         self.colorFrame = LabelFrame(self.Home, text='Color :')
         self.colorFrame.place(x=200, y=10)
+
+        # First digit color on resister 
 
         self.colorFirstDigit = Label(self.colorFrame, height=2, width=4)
         self.colorFirstDigit.pack()
 
+        # Second digit color on resister 
+
         self.colorSecondDigit = Label(self.colorFrame, height=2, width=4)
         self.colorSecondDigit.pack()
+
+        # Multiplier color on resister 
         
         self.colorMultiplierDigit = Label(self.colorFrame, height=2, width=4)
         self.colorMultiplierDigit.pack()
 
+        # Tolerance color on resister
+
         self.colorToleranceDigit = Label(self.colorFrame, height=2, width=4)
         self.colorToleranceDigit.pack()
+
+        # --- Search Tab --
+
+        self.processLab = Label(self.Search, text='🔧 On Working 🔨')
+        self.processLab.pack()
+
+        self.process = ttk.Progressbar(self.Search, orient='horizontal', mode='determinate', length=200)
+        self.process.pack()
+        self.process.start()
 
         # --- Documant Page ---
 
@@ -99,24 +149,24 @@ class App:
         self.documentFrame.pack()
         self.documentText = Text(self.documentFrame)
 
-        with open('Docs/Document.txt') as f:
+        with open('Docs/Document.txt') as f: # Get text(Documentation) to <path>
             line = f.readlines()
 
         x = 4
-        for i in reversed(range(len(line))):
+        for i in reversed(range(len(line))): # Place Text by revese under to above
             self.documentText.insert('1.0', line[i])
             x -= 1
 
         self.documentText.pack()
 
     def findingValue(self):
-        with open("digitValue.json", "r") as f:
+        with open("digitValue.json", "r") as f:  # Read Dictionary data
             data = json.load(f)
         
         number = []
         formula = []
 
-        if self.firstDigitValue.get() != '' and self.firstDigitValue.get() != 'None':
+        if self.firstDigitValue.get() != '' and self.firstDigitValue.get() != 'None': # if key name equal color tag
             for x, y in data.items():
                 if self.firstDigitValue.get() == x:
                     number.append(y['digit'])
@@ -146,20 +196,27 @@ class App:
 
         return formula
 
-    def calculator(self):
+    def calculateResister(self):
         lists = self.findingValue()
-        return [((lists[0] * lists[1]) - ((lists[0] * lists[1])* lists[2])), ((lists[0] * lists[1]) + ((lists[0] * lists[1])* lists[2]))]
+        self.minimumValue = (lists[0] * lists[1]) - ((lists[0] * lists[1])* lists[2]) # Find minimum range
+        self.maximumValue = (lists[0] * lists[1]) + ((lists[0] * lists[1])* lists[2]) # Find maximum range
+        self.resistanceValue = self.minimumValue + self.maximumValue / 2
+
+        return [self.minimumValue, self.maximumValue, self.resistanceValue]
+            
+    def calculateWatt(self):
+        lists = self.findingValue()
+        return 230 ** 2 / (lists[0] + lists[1])
 
     def showOutput(self):
-        ans = self.calculator()
-        minimumValue = ans[0]
-        maximumValue = ans[1]
+        resistance = self.calculateResister()
 
-        self.answerLab['text'] = f'{minimumValue} --> {maximumValue}'
+        self.MintoMaxLab['text'] = f'{resistance[0]} ohm --> {resistance[1]} ohm'
+        self.MediumLab['text'] = f'≈ {(resistance[0] + resistance[1]) / 2} ohm'
+        self.WattLab['text'] = f'{round(self.calculateWatt(), 2)} Watt'
+        
         self.showColor()
-
-        return f'{minimumValue} --> {maximumValue}'
-
+    
     def showColor(self):
         with open("digitValue.json", "r") as f:
             data = json.load(f)
@@ -188,7 +245,11 @@ class App:
         return formula
 
 
+    # -- Frame Search --
     
+
+
+            
 if __name__ == "__main__":
     root = Tk()
     app = App(root)
