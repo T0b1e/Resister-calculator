@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import Button, Frame, Label, LabelFrame, Tk, ttk, messagebox, Text
-from colorama import Fore
 import json
 
 
