@@ -1,12 +1,13 @@
 # Resister-calculator
-For this project I create this for make it easier to calculate resister and easy to find usable resister on ic
+For this project, I create this to make it easier to calculate resister (4 bands; First digit, Second digit, Multiplier digit, Tolerance digit) and easy to find usable resister on Electonic circuit
 
 ## How to use
 1. Select color on window
 2. Select 1st digit (No need to choose)
 3. Select 2st digit
-4. Select Multiplier
+4. Select Multiplier (Must choose)
 5. Select Tolerance
+6. Enter Button 
 
 ## Example usgae
 

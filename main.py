@@ -37,13 +37,15 @@ class App:
         self.ans = ttk.Labelframe(self.Home, text='Result :')
         self.ans.place(x=30, y=300)
 
+        # -- Selection Frame --
+
         self.firstDigitLabel = Label(self.select, text='First Digit')
         self.firstDigitLabel.pack()
 
         self.firstDigitValue = tk.StringVar()
-        self.firstDigit = ttk.Combobox(self.select, textvariable=self.firstDigitValue)
-        self.firstDigit['values'] = self.color[:10]
-        self.firstDigit['state'] = self.color[0]
+        self.firstDigit = ttk.Combobox(self.select, textvariable=self.firstDigitValue)  # First Digti Value 
+        self.firstDigit['values'] = self.color[:10] # Set array to 0-10 ('None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')
+        self.firstDigit['state'] = self.color[0] # Set Start at None
 
         self.firstDigit.pack(padx=5, pady=5)
 
@@ -52,8 +54,8 @@ class App:
 
         self.secondDigitValue = tk.StringVar()
         self.secondDigit = ttk.Combobox(self.select, textvariable=self.secondDigitValue)
-        self.secondDigit['values'] = self.color[:10]
-        self.secondDigit['state'] = self.color[0]
+        self.secondDigit['values'] = self.color[:10] # Set array to 0-10 ('None', 'Black', 'Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey', 'White')
+        self.secondDigit['state'] = self.color[0] # Set Start at None
 
         self.secondDigit.pack(padx=5, pady=5)
 
@@ -62,7 +64,7 @@ class App:
 
         self.multiplierDigitValue = tk.StringVar()
         self.multiplierDigit = ttk.Combobox(self.select, textvariable=self.multiplierDigitValue)
-        self.multiplierDigit['values'] = self.color[1:]
+        self.multiplierDigit['values'] = self.color[1:] # Didn't has None choice
         self.multiplierDigit['state'] = self.color[0]
 
         self.multiplierDigit.pack(padx=5, pady=5)
@@ -72,7 +74,7 @@ class App:
 
         self.toleranceDigitValue = tk.StringVar()
         self.toleranceDigit = ttk.Combobox(self.select, textvariable=self.toleranceDigitValue)
-        self.toleranceDigit['values'] = self.color[2:10]
+        self.toleranceDigit['values'] = self.color[2:10] # By ('Brown', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Violet', 'Grey')
         self.toleranceDigit['state'] = self.color[0]
 
         self.toleranceDigit.pack(padx=5, pady=5)
@@ -218,7 +220,7 @@ class App:
         self.showColor()
     
     def showColor(self):
-        with open("digitValue.json", "r") as f:
+        with open("digitValue.json", "r") as f: # Read json data file for read color tag
             data = json.load(f)
 
         formula = []
@@ -226,7 +228,7 @@ class App:
         if self.firstDigitValue.get() != '' and self.firstDigitValue.get() != 'None':
             for x, y in data.items():
                 if self.firstDigitValue.get() == x:
-                    self.colorFirstDigit['bg'] = str(x).lower()
+                    self.colorFirstDigit['bg'] = str(x).lower() # Setting configuration on that label so you can't change at all
                     
         if self.secondDigitValue.get() != '' and self.secondDigitValue.get() != 'None':
             for x, y in data.items():
@@ -246,6 +248,8 @@ class App:
 
 
     # -- Frame Search --
+
+        # In process
     
 
 
