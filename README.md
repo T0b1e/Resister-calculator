@@ -12,7 +12,7 @@ For this project, I create this to make it easier to calculate resister (4 bands
 ## Example usgae
 
 !['image1'](Docs/Image/mainPage_1.png) 
-!['image2'](Docs/Image/mainPage_2.png)
+!['image2'](Docs/Image/mainPage_3.png)
 
 ### OUTPUT
 range of resister and type  of resister need ex. 0 - 1
